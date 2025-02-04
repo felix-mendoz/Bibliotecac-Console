@@ -1,0 +1,7 @@
+C:\Users\felix\source\repos\visual studio 2019 projects\BibliotecaSmart\BibliotecaInteligente\bin\Debug\BibliotecaInteligente.exe.config
+C:\Users\felix\source\repos\visual studio 2019 projects\BibliotecaSmart\BibliotecaInteligente\bin\Debug\BibliotecaInteligente.exe
+C:\Users\felix\source\repos\visual studio 2019 projects\BibliotecaSmart\BibliotecaInteligente\bin\Debug\BibliotecaInteligente.pdb
+C:\Users\felix\source\repos\visual studio 2019 projects\BibliotecaSmart\BibliotecaInteligente\obj\Debug\BibliotecaInteligente.csproj.AssemblyReference.cache
+C:\Users\felix\source\repos\visual studio 2019 projects\BibliotecaSmart\BibliotecaInteligente\obj\Debug\BibliotecaInteligente.csproj.CoreCompileInputs.cache
+C:\Users\felix\source\repos\visual studio 2019 projects\BibliotecaSmart\BibliotecaInteligente\obj\Debug\BibliotecaInteligente.exe
+C:\Users\felix\source\repos\visual studio 2019 projects\BibliotecaSmart\BibliotecaInteligente\obj\Debug\BibliotecaInteligente.pdb
