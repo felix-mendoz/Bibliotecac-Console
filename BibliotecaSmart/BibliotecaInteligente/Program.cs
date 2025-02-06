@@ -77,7 +77,7 @@ namespace BibliotecaInteligente
             Console.WriteLine("Seleccione una opción y presione Enter..."); // Instrucción para el usuario
             Console.WriteLine("║                                                    "); // Espacio en blanco
             Console.WriteLine("║                                                    "); // Espacio en blanco
-            Console.WriteLine("                         F1 Ayuda     ↑↓ Mover Barra     → ← Mover Menues     Enter Validar     Esc Salir o 6");
+            Console.WriteLine("                         F1 Ayuda     ↑↓ Mover Barra     → ← Mover Menues     Enter Validar     Esc Salir o 9");
             Console.WriteLine("║                                                    "); // Espacio en blanco
             Console.WriteLine("                                  Version 1.0 / By: Josian Rafael y Felix Mendoza S.A    ");
         }//FIn MostrarMenu
@@ -172,8 +172,6 @@ namespace BibliotecaInteligente
                 Console.ResetColor();
                 Console.Write("** Ingrese la fecha de publicación: ");
             }
-
-            Console.Write("✍** Ingrese el nombre del autor: ");
             Autores.Add(AgregarAutor(69, 12, 20, 14, Autores));
             int Acceder = Autores.Count - 1;
             // Agrega el nuevo libro a la biblioteca
@@ -186,22 +184,72 @@ namespace BibliotecaInteligente
         } //Fin metodo agregar libro
 
         // Método para mostrar los libros disponibles..
-        static void MostrarLibros(List<Libro> Libros)
+        static void MostrarLibros(List<Libro> Libros,int x,int y)
         {
-            foreach (Libro Valor in Libros) // Itera sobre los libros
+
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.White;
+
+            string t1 = "| ID |";
+            int posicionID = (x + t1.Length);
+            Console.SetCursorPosition(x, y); Console.Write(t1);
+
+            string t2 = "       Titulo      |";
+            int PosicionTitulo = (posicionID + t2.Length);
+            Console.SetCursorPosition(posicionID, y); Console.Write(t2);
+
+            string t3 = "      Genero       |";
+            int PosicionGenero = PosicionTitulo + t3.Length;
+            Console.SetCursorPosition(PosicionTitulo, y); Console.Write(t3);
+
+            string t4 = "      Fecha Publicación       |";
+            int PosicionFecha = PosicionGenero + t4.Length;
+            Console.SetCursorPosition(PosicionGenero, y); Console.Write(t4);
+
+            string t5 = "      Autor del libro         |";
+            int PosicionAutor = PosicionFecha + t5.Length;
+            Console.SetCursorPosition(PosicionFecha, y); Console.Write(t5);
+            
+            string t6 = "   Estado   |";
+            int PosicionEstado = PosicionAutor + t6.Length;
+            Console.SetCursorPosition(PosicionAutor, y); Console.Write(t6);
+
+            Console.ResetColor();
+            if (Libros.Count > 0)
             {
-                string Estado;
-
-                if (Valor.Estado)
+                int Contador = y + 1;
+                foreach (Libro valor in Libros)
                 {
-                    Estado = "Disponible";
-                }
-                else 
-                {
-                    Estado = "Rentado";
-                }
+                    int CentralizarxID = posicionID - (t1.Length/2) - (valor.IDLibro.ToString().Length / 2);
+                    int CentralizarxTitulo = PosicionTitulo - (t2.Length / 2) - (valor.Titulo.Length / 2);
+                    int CentralizarxGenero = PosicionGenero - (t3.Length / 2) - (valor.Genero.Length / 2);
+                    int CentralizarFecha =  PosicionFecha - (t4.Length / 2) - (valor.FechaPublicacion.ToString().Length / 2);
+                    string AutorNameCompleto = $"{valor.Autor.GetNombreAutor()} {valor.Autor.GetApellidoAutor()}";
+                    int CentralizarAutor = PosicionAutor- (t5.Length / 2) - (AutorNameCompleto.Length / 2);
+                    Console.SetCursorPosition(CentralizarxID, Contador); Console.Write(valor.IDLibro);
+                    Console.SetCursorPosition(CentralizarxTitulo, Contador); Console.Write(valor.Titulo);
+                    Console.SetCursorPosition(CentralizarxGenero, Contador); Console.Write(valor.Genero);
+                    Console.SetCursorPosition(CentralizarFecha, Contador); Console.Write(valor.FechaPublicacion);
+                    Console.SetCursorPosition(CentralizarAutor, Contador); Console.Write("{0} {1}",valor.Autor.GetNombreAutor(),valor.Autor.GetApellidoAutor());
+                    string Estado;
 
-                Console.WriteLine($"** ID {Valor.IDLibro} {Valor.Titulo}  Del genero {Valor.Genero}/ publicado el {Valor.FechaPublicacion} - Por el autor {Valor.Autor.GetNombreAutor()} {Valor.Autor.GetApellidoAutor()} Estado {Estado}**"); // Muestra el título y el estado del libro y si esta disponible o prestado.
+                    if (valor.Estado)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Estado = "Disponible";
+                    }
+                    else
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkYellow;
+                        Console.ForegroundColor = ConsoleColor.White;
+                        Estado = "Rentado";
+                    }
+                    int CentralizarEstado = PosicionEstado - (t6.Length / 2) - (Estado.Length / 2);
+                    Console.SetCursorPosition(CentralizarEstado, Contador); Console.Write(Estado);
+                    Console.ResetColor();
+                    Contador++;
+                }
             }
         }//Fin metodo mostrar libros
 
@@ -228,19 +276,19 @@ namespace BibliotecaInteligente
 
             string t1 = "| ID |";
             int posicionID = (x + t1.Length);
-            Console.SetCursorPosition(posicionID, y); Console.Write(t1);
+            Console.SetCursorPosition(x, y); Console.Write(t1);
 
             string t2 = "     Nombres     |";
             int PosicionNombre = (posicionID + t2.Length);
-            Console.SetCursorPosition(PosicionNombre, y); Console.Write(t2);
+            Console.SetCursorPosition(posicionID, y); Console.Write(t2);
 
             string t3 = "      Apellidos       |";
-            int PosicionApellido = PosicionNombre + t3.Length;
-            Console.SetCursorPosition(PosicionApellido, y); Console.Write(t3);
+            int PosicionApellido = (PosicionNombre + t3.Length);
+            Console.SetCursorPosition(PosicionNombre, y); Console.Write(t3);
 
             string t4 = " ID Libro |";
             int PosicionIDLibro = PosicionApellido + t4.Length;
-            Console.SetCursorPosition(PosicionIDLibro, y); Console.Write(t4);
+            Console.SetCursorPosition(PosicionApellido, y); Console.Write(t4);
 
             Console.ResetColor();
 
@@ -249,18 +297,27 @@ namespace BibliotecaInteligente
                 int Contador = y + 1;
                 foreach (Usuario valor in Usuarios)
                 {
-                    Console.SetCursorPosition((posicionID / 2), Contador); Console.Write(valor.GetIDUsuario());
-                    Console.SetCursorPosition(PosicionNombre, Contador); Console.Write(valor.GetNombreUsuario());
-                    Console.SetCursorPosition(PosicionApellido, Contador); Console.Write(valor.GetApellidoUsuario());
-                    Console.SetCursorPosition((PosicionIDLibro/2), Contador); 
-                    if (valor.GetLibroIDUsuario() == 0) 
+                    string mostrar;
+                    if (valor.GetLibroIDUsuario() == 0)
                     {
-                        Console.Write("N/A");
+                        mostrar = "N/A";
                     }
-                    else 
+                    else
                     {
-                        Console.Write(valor.GetLibroIDUsuario());
+                        mostrar = Convert.ToString(valor.GetLibroIDUsuario());
                     }
+
+                    //En caso de querer centralizarlos
+                    //int CentralizarxID = posicionID - (t1.Length / 2) - (valor.GetIDUsuario().ToString().Length / 2);
+                    //int CentralizarxNombre = PosicionNombre - (t2.Length / 2) - (valor.GetNombreUsuario().Length / 2);
+                    //int CentralizarxApellido = PosicionApellido - (t3.Length / 2) - (valor.GetApellidoUsuario().Length / 2);
+                    int CentralizarxIdLibro = PosicionIDLibro - (t4.Length / 2) - (mostrar.Length / 2);
+
+                    Console.SetCursorPosition(posicionID-(t1.Length/ 2), Contador); Console.Write(valor.GetIDUsuario());
+                    Console.SetCursorPosition(posicionID, Contador); Console.Write(valor.GetNombreUsuario());
+                    Console.SetCursorPosition(PosicionNombre, Contador); Console.Write(valor.GetApellidoUsuario());
+                    Console.SetCursorPosition(CentralizarxIdLibro, Contador); Console.Write(mostrar);
+                    
                     Contador++;
                 }
             }
@@ -289,15 +346,15 @@ namespace BibliotecaInteligente
 
             string t1 = "| ID |";
             int posicionID = (x + t1.Length);
-            Console.SetCursorPosition(posicionID, y); Console.Write(t1);
+            Console.SetCursorPosition(x, y); Console.Write(t1);
 
             string t2 = "     Nombres     |";
             int PosicionNombre = (posicionID + t2.Length);
-            Console.SetCursorPosition(PosicionNombre, y); Console.Write(t2);
+            Console.SetCursorPosition(posicionID, y); Console.Write(t2);
 
             string t3 = "      Apellidos       |";
             int PosicionApellido = PosicionNombre + t3.Length;
-            Console.SetCursorPosition(PosicionApellido, y); Console.Write(t3);
+            Console.SetCursorPosition(PosicionNombre, y); Console.Write(t3);
 
             Console.ResetColor();
 
@@ -306,9 +363,9 @@ namespace BibliotecaInteligente
                 int Contador = y+1;
                 foreach(Autor valor in Autores) 
                 {
-                    Console.SetCursorPosition((posicionID / 2), Contador); Console.Write(valor.GetIDAutor());
-                    Console.SetCursorPosition(PosicionNombre, Contador); Console.Write(valor.GetNombreAutor());
-                    Console.SetCursorPosition(PosicionApellido, Contador); Console.Write(valor.GetApellidoAutor());
+                    Console.SetCursorPosition(posicionID - (t1.Length / 2), Contador); Console.Write(valor.GetIDAutor());
+                    Console.SetCursorPosition(posicionID, Contador); Console.Write(valor.GetNombreAutor());
+                    Console.SetCursorPosition(PosicionNombre, Contador); Console.Write(valor.GetApellidoAutor());
                     Contador++;
                 }
             }
@@ -322,19 +379,19 @@ namespace BibliotecaInteligente
             {
                 case 0: // Opción 1: Ver Libros
                     Console.WriteLine("📚 Libros Disponibles:");
-                    MostrarLibros(Libros);
+                    MostrarLibros(Libros,12,4);
                     break;
                 case 1: // Opción 2: Agregar Libro
                     AgregarLibro(Autores,Libros);
                     break;
                 case 2: // Opción 3: Ver Usuarios
-                    ConsultarUsuarios(69,12,Usuarios);
+                    ConsultarUsuarios(69,4,Usuarios);
                     break;
                 case 3: // Opción 4: Ver Autores
-                    ConsultarAutores(69, 12, Autores);
+                    ConsultarAutores(69, 4, Autores);
                     break;
                 case 4: // Opción 5: Ver Libros Prestados
-                   /* MostrarLibrosPrestados();*/ // Muestra los libros prestados
+                    VerlibrosPrestados(Libros, Usuarios, 12, 4);
                     break;
                 case 5: // Opción 6: Agregar usuario
                     AgregarUsuario(69, 12, 20, 14, Usuarios);
@@ -354,12 +411,34 @@ namespace BibliotecaInteligente
             Console.ReadKey(); // Espera a que el usuario presione una tecla
         }//Fin ejecutar opcion
 
-        public static void PrestarLibro(List<Usuario>Usuarios,List<Libro> Libros)
+        public static void PrestarLibro(List<Usuario> Usuarios, List<Libro> Libros)
         {
-            Console.Write("Escriba el Id  del usuario: ");
-            int IDUsuario = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Escriba el id del libro: ");
-            int IDLibro = Convert.ToInt32(Console.ReadLine());
+            int IDUsuario;
+            int IDLibro;
+
+            // Validación para ID de usuario
+            while (true)
+            {
+                Console.Write("Escriba el Id del usuario: ");
+                string inputUsuario = Console.ReadLine();
+                if (int.TryParse(inputUsuario, out IDUsuario))
+                {
+                    break; // Salir del bucle si se ingresó un número entero
+                }
+                Console.WriteLine("Por favor, ingrese un número válido para el ID del usuario.");
+            }
+
+            // Validación para ID de libro
+            while (true)
+            {
+                Console.Write("Escriba el id del libro: ");
+                string inputLibro = Console.ReadLine();
+                if (int.TryParse(inputLibro, out IDLibro))
+                {
+                    break; // Salir del bucle si se ingresó un número entero
+                }
+                Console.WriteLine("Por favor, ingrese un número válido para el ID del libro.");
+            }
 
             bool usuarioEncontrado = false; // Variable para comprobar si se encontró el usuario
 
@@ -381,7 +460,7 @@ namespace BibliotecaInteligente
                             if (IDLibro == libro.IDLibro)
                             {
                                 libroEncontrado = true;
-                                //Prestar libro
+                                // Prestar libro
                                 usuario.SetLibroIDUsuario(IDLibro);
                                 libro.Estado = false;
                                 Console.WriteLine("Libro prestado exitosamente");
@@ -408,15 +487,36 @@ namespace BibliotecaInteligente
             {
                 Console.WriteLine("Usuario no encontrado");
             }
-
         }
 
         public static void DevolverLibro(List<Usuario> Usuarios, List<Libro> Libros)
         {
-            Console.Write("Escriba el Id  del usuario: ");
-            int IDUsuario = Convert.ToInt32(Console.ReadLine());
-            Console.Write("Escriba el id del libro: ");
-            int IDLibro = Convert.ToInt32(Console.ReadLine());
+            int IDUsuario;
+            int IDLibro;
+
+            // Validación para ID de usuario
+            while (true)
+            {
+                Console.Write("Escriba el Id del usuario: ");
+                string inputUsuario = Console.ReadLine();
+                if (int.TryParse(inputUsuario, out IDUsuario))
+                {
+                    break; // Salir del bucle si se ingresó un número entero
+                }
+                Console.WriteLine("Por favor, ingrese un número válido para el ID del usuario.");
+            }
+
+            // Validación para ID de libro
+            while (true)
+            {
+                Console.Write("Escriba el id del libro: ");
+                string inputLibro = Console.ReadLine();
+                if (int.TryParse(inputLibro, out IDLibro))
+                {
+                    break; // Salir del bucle si se ingresó un número entero
+                }
+                Console.WriteLine("Por favor, ingrese un número válido para el ID del libro.");
+            }
 
             bool usuarioEncontrado = false; // Variable para comprobar si se encontró el usuario
 
@@ -428,7 +528,7 @@ namespace BibliotecaInteligente
                 {
                     usuarioEncontrado = true; // Marcamos que el usuario fue encontrado
 
-                    // Si el usuario no tiene un libro rentado
+                    // Si el usuario tiene un libro rentado
                     if (usuario.GetLibroIDUsuario() != 0)
                     {
                         bool libroEncontrado = false; // Variable para verificar si se encontró el libro
@@ -436,21 +536,19 @@ namespace BibliotecaInteligente
                         foreach (Libro libro in Libros)
                         {
                             if (IDLibro == libro.IDLibro)
-                            {   
+                            {
                                 libroEncontrado = true;
                                 if (!libro.Estado)
                                 {
-                                    //Devolver libro
+                                    // Devolver libro
                                     usuario.SetLibroIDUsuario(0);
                                     libro.Estado = true;
                                     Console.WriteLine("Devuelta exitosa");
                                 }
-                                else 
+                                else
                                 {
-                                    Console.WriteLine("Este libro no esta prestado");
+                                    Console.WriteLine("Este libro no está prestado");
                                 }
-                                
-
                                 break;
                             }
                         }
@@ -462,7 +560,7 @@ namespace BibliotecaInteligente
                     }
                     else
                     {
-                        Console.WriteLine("El usuario No tiene un libro que devolver.");
+                        Console.WriteLine("El usuario no tiene un libro que devolver.");
                     }
 
                     break; // Salimos del foreach ya que encontramos el usuario
@@ -476,6 +574,94 @@ namespace BibliotecaInteligente
             }
         }
 
+        public static void VerlibrosPrestados(List<Libro> Libros, List<Usuario> Usuarios, int x, int y)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.ForegroundColor = ConsoleColor.White;
+
+            int ContarLibrosPrestados = 0;
+
+            foreach (Usuario usuario in Usuarios)
+            {
+                if (usuario.GetLibroIDUsuario() != 0)
+                {
+                    ContarLibrosPrestados++;
+                }
+            }
+
+            if (ContarLibrosPrestados > 0)
+            {
+                string t1 = "| ID Libro |";
+                int posicionID = (x + t1.Length);
+                Console.SetCursorPosition(x, y); Console.Write(t1);
+
+                string t2 = "       Titulo      |";
+                int PosicionTitulo = (posicionID + t2.Length);
+                Console.SetCursorPosition(posicionID, y); Console.Write(t2);
+
+                string t3 = "      Genero       |";
+                int PosicionGenero = PosicionTitulo + t3.Length;
+                Console.SetCursorPosition(PosicionTitulo, y); Console.Write(t3);
+
+                string t4 = "      Autor del libro         |";
+                int PosicionAutor = PosicionGenero + t4.Length;
+                Console.SetCursorPosition(PosicionGenero, y); Console.Write(t4);
+
+                string t5 = "       Prestado a       |";
+                int PosicionPrestadoA = PosicionAutor + t5.Length;
+                Console.SetCursorPosition(PosicionAutor, y); Console.Write(t5);
+
+                string t6 = " Con ID |";
+                int PosicionIDUsuario = PosicionPrestadoA + t6.Length;
+                Console.SetCursorPosition(PosicionPrestadoA, y); Console.Write(t6);
+
+                Console.ResetColor();
+                if (Libros.Count > 0)
+                {
+                    int Contador = y + 1;
+                    foreach (Usuario valor in Usuarios)
+                    {
+                        int CentralizarxID = posicionID - (t1.Length / 2) - (valor.GetLibroIDUsuario().ToString().Length / 2);
+                        string TituloLibro = "";
+                        string GeneroLibro = "";
+                        string AutorNombreLibro = "";
+                        string UsuarioNombreCompleto = $"{valor.GetNombreUsuario()} {valor.GetApellidoUsuario()}";
+                        foreach (Libro Libro in Libros)
+                        {
+                            if (valor.GetLibroIDUsuario() == Libro.IDLibro)
+                            {
+                                TituloLibro = Libro.Titulo;
+                                GeneroLibro = Libro.Genero;
+                                AutorNombreLibro = $"{Libro.Autor.GetNombreAutor()} {Libro.Autor.GetApellidoAutor()}";
+                                break;
+                            }
+                        }
+
+                        int CentralizarxTitulo = PosicionTitulo - (t2.Length / 2) - (TituloLibro.Length / 2);
+                        int CentralizarxGenero = PosicionGenero - (t3.Length / 2) - (GeneroLibro.Length / 2);
+                        int CentralizarAutor = PosicionAutor - (t4.Length / 2) - (AutorNombreLibro.Length / 2);
+                        int CentralizarNombreUsuario = PosicionPrestadoA - (t5.Length / 2) - (UsuarioNombreCompleto.Length / 2);
+                        int CentralizarIDUsuario = PosicionIDUsuario - (t6.Length / 2) - (valor.GetIDUsuario().ToString().Length / 2);
+
+                        Console.SetCursorPosition(CentralizarxID, Contador); Console.Write(valor.GetLibroIDUsuario());
+                        Console.SetCursorPosition(CentralizarxTitulo, Contador); Console.Write(TituloLibro);
+                        Console.SetCursorPosition(CentralizarxGenero, Contador); Console.Write(GeneroLibro);
+                        Console.SetCursorPosition(CentralizarAutor, Contador); Console.Write(AutorNombreLibro);
+                        Console.SetCursorPosition(CentralizarNombreUsuario, Contador); Console.Write(UsuarioNombreCompleto);
+                        Console.SetCursorPosition(CentralizarIDUsuario, Contador); Console.Write(valor.GetIDUsuario());
+                    }
+                }
+
+
+            }
+            else 
+            {
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine("No hay libros prestados");
+                Console.ResetColor();
+            } //Fin si hay libros prestados
+        } //Fin metodo
         public static void Limpiar(int x1, int x2,  int y1, int y2)
         {
             for (int x = x1; x<=x2; x++)
